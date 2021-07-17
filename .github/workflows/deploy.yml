@@ -1,0 +1,20 @@
+name: Deploy Site Metadata
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying theme
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /home/tools/pool-metadata
+            git pull origin master
+          host: ${{ secrets.HOST }}
+          user: tools
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
